@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Tradingo - AI Crypto Trading Platform</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <meta name="description" content="Tradingo - AI-powered cryptocurrency trading platform. Automated trading bots for Bitcoin, Ethereum, and other cryptocurrencies.">
+    <meta name="keywords" content="crypto trading, bitcoin, ethereum, trading bot, automated trading, cryptocurrency, tradingo, ai trading">
+    <style>
+        /* Inline critical CSS for faster loading */
+        :root {
+            --tradingo-primary: #00d09c;
+            --tradingo-secondary: #0066ff;
+            --tradingo-dark: #0a0e17;
+            --tradingo-card: #1a1f2e;
+            --tradingo-text: #ffffff;
+            --tradingo-success: #00d09c;
+            --tradingo-danger: #ff4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--tradingo-dark); 
+            color: var(--tradingo-text); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-icon">🤖</div>
+                <div>
+                    <h1 class="logo-text">TRADINGO</h1>
+                    <p class="logo-subtitle">AI Crypto Trading Platform</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#dashboard" class="nav-link">Dashboard</a>
+                <a href="#trading" class="nav-link">Trading</a>
+                <a href="#analytics" class="nav-link">Analytics</a>
+                <a href="#account" class="nav-link">Account</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Automate Your Crypto Trading with AI</h2>
+                <p>Tradingo uses advanced algorithms to trade cryptocurrencies 24/7. Maximize profits while minimizing risks.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="startTrading()">
+                        <span class="btn-icon">▶</span> Start Trading Bot
+                    </button>
+                    <button class="btn btn-secondary" onclick="showDemo()">
+                        <span class="btn-icon">📺</span> Watch Demo
+                    </button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number" id="activeBots">0</div>
+                    <div class="stat-label">Active Bots</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="dailyProfit">+$0.00</div>
+                    <div class="stat-label">Today's P&L</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="totalTrades">0</div>
+                    <div class="stat-label">Total Trades</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <div class="grid">
+                <!-- Market Prices -->
+                <div class="card">
+                    <h3 class="card-title">📈 Live Market Prices</h3>
+                    <div class="market-list" id="marketPrices">
+                        <!-- Prices will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Trading Controls -->
+                <div class="card">
+                    <h3 class="card-title">⚡ Trading Controls</h3>
+                    <div class="control-group">
+                        <div class="form-group">
+                            <label>Select Strategy</label>
+                            <select id="strategySelect" class="form-select">
+                                <option value="scalping">Scalping (Fast Trades)</option>
+                                <option value="swing">Swing Trading</option>
+                                <option value="grid">Grid Trading</option>
+                                <option value="martingale">Martingale</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Investment Amount ($)</label>
+                            <input type="number" id="investmentAmount" class="form-input" value="100" min="10" max="10000">
+                        </div>
+                        <div class="form-group">
+                            <label>Risk Level</label>
+                            <div class="risk-slider">
+                                <input type="range" id="riskSlider" min="1" max="10" value="5" class="slider">
+                                <div class="risk-labels">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block" onclick="startBot()">
+                            <span class="btn-icon">🚀</span> Launch Trading Bot
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Trades -->
+                <div class="card card-wide">
+                    <h3 class="card-title">📋 Recent Trades</h3>
+                    <div class="trades-table" id="tradesTable">
+                        <div class="trade-row header">
+                            <div>Symbol</div>
+                            <div>Side</div>
+                            <div>Price</div>
+                            <div>Profit</div>
+                            <div>Time</div>
+                        </div>
+                        <!-- Trades will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Performance Stats -->
+                <div class="card">
+                    <h3 class="card-title">📊 Performance</h3>
+                    <div class="performance-stats">
+                        <div class="perf-stat">
+                            <div class="perf-label">Win Rate</div>
+                            <div class="perf-value" id="winRate">0%</div>
+                        </div>
+                        <div class="perf-stat">
+                            <div class="perf-label">Avg. Profit</div>
+                            <div class="perf-value success" id="avgProfit">+$0.00</div>
+                        </div>
+                        <div class="perf-stat">
+                            <div class="perf-label">Total Profit</div>
+                            <div class="perf-value success" id="totalProfit">+$0.00</div>
+                        </div>
+                        <div class="perf-stat">
+                            <div class="perf-label">Active Days</div>
+                            <div class="perf-value" id="activeDays">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">🤖 TRADINGO</div>
+                <p class="footer-tagline">AI-Powered Crypto Trading</p>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#support">Support</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <p class="footer-copyright">© 2024 Tradingo AI Trading Platform. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/app.js"></script>
+    <script>
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMarketData();
+            loadRecentTrades();
+            updateStats();
+            
+            // Connect to WebSocket for real-time data
+            connectWebSocket();
+        });
+    </script>
+</body>
+</html>
